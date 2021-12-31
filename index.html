@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .slider-dots{
+            margin-bottom: 40px;
+        }
+        main{
+            flex-direction: column;
+            padding: 20px;
+        }
+        aside{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .countOfElemants, .ollElements{
+            min-width: 100%;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            padding: 5px;
+        }
+        ._error {
+        box-shadow: 0 0 20px red;
+        }
+    </style>
+    <title>lab1</title>
+</head>
+<body>
+    <header name="bl">
+        <div class="x" onClick="cl()">
+            <p>Something x</p>
+        </div>
+        <div class="one">
+            <p>1</p>
+        </div>
+    </header>
+    <section class="main-container" name="bl">
+        <nav id="two" name="bl">
+            <ul>
+               	<li><a href="index.html">main</a> </li>
+               	<li><a href="2.html">second</a> </li>
+               	<li><a href="3.html">third</a> </li>
+               	<li><a href="4.html">fourth</a> </li>
+               	<li><a href="5.html">fifth</a> </li>
+            </ul>
+        </nav>
+        <section class="right-wrapper">
+            <header class="three" name="bl" id="3">
+            Незнакомец не был стар, но волосы у него были почти совершенно белыми. Под плащом он носил потертую кожаную куртку со шнуровкой у горла и на рукавах. Когда сбросил плащ, стало видно, что на ремне за спиной у него висит меч. Ничего странного в этом не было, в Вызиме почти все ходили с оружием, правда, никто не носил меч на спине, словно лук или колчан.
+            </header>
+            <section class="down-wrapper">
+                <section class="left-wrapper">
+                    <article name="bl" id="four">
+                      4
+                    </article>
+                    <footer name="bl" class="six">
+                    	6
+                    </footer>
+                </section>
+                <aside name="bl" id="five">
+                  <div class="countOfElemants" id="countOfElemants">
+                        <input type="number" id="count" min="1" max='5' value="3">
+                        <input type="button" value="Додати посилання" onclick="add()">
+                  </div>
+                </aside>
+            </section>
+        </section>
+    </section>
+    <footer name="bl">
+        <div class="seven">
+            <p>7</p>
+        </div>
+        <div class="y">
+            <p>Something y</p>
+        </div>
+    </footer>
+    <script>
+        let num;
+
+        function addURL(){
+            let arrURL=[];
+            arrURL.length = num;
+            for(let i = 0; i<num; i++){
+                arrURL[i] = document.getElementById('id'+i).value;
+            }
+
+            let ToSend = { 'URLs': arrURL};
+            alert(JSON.stringify(ToSend));
+            console.log(JSON.stringify(ToSend));
+            fetch("/savejson", {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json",
+                },
+                body: JSON.stringify(ToSend)
+            });
+            const div = document.createElement('div');
+            div.className = 'dropdown';
+            div.innerHTML = `<button>Dropdown menu</button>
+                             <div id="dropdown-content" ></div>`;
+            document.getElementById('four').appendChild(div);
+            const div1 = document.getElementById('dropdown-content');
+            for(let i = 0; i<num; i++){
+                div1.innerHTML += `
+                    <a id="`+i+`" href="`+arrURL[i]+`">Link "`+(i+1)+`"</a>
+                `;}
+        }
+
+        function add(){
+            num = document.getElementById('count').value;
+            document.getElementById('countOfElemants').remove();
+
+            const div = document.createElement('div');
+            div.className = 'ollElements';
+            div.innerHTML = ``;
+            for(let i = 0; i<num; i++){
+                div.innerHTML += `
+                    <input type="text" id="id`+i+`" placeholder="URL №`+(i+1)+`" />
+                `;
+            }
+            div.innerHTML += `
+                    <input type="button" id="ButtonAdd" onClick="addURL()" value="Зберегти та вивести" />
+            `;
+            document.getElementById('five').appendChild(div);
+        }
+    </script>
+</body>
+</html>
